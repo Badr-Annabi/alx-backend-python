@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Writing a type-annotated function """
-from typing import Tuple, Any, List
+from typing import Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:

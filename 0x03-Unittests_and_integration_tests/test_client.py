@@ -23,7 +23,6 @@ class TestGithubOrgClient(unittest.TestCase):
         mock.assert_called_once_with(
                 f'https://api.github.com/orgs/{input}')
 
-    
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org):
         """

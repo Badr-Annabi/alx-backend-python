@@ -34,7 +34,9 @@ class TestGetJson(unittest.TestCase):
     """Class for testing get_json method"""
     @patch('requests.get')
     def test_get_json(self, mock_get):
-        """Test for the get_json method if it returns the expected result"""
+        """
+        Test for the get_json method if it returns the expected result
+        """
         test_cases = [
                 ("http://example.com", {"payload": True}),
                 ("http://holberton.io", {"payload": False})
@@ -54,7 +56,7 @@ class TestMemoize(unittest.TestCase):
     """Class for testing utils.memoize"""
 
     def test_memoize(self):
-        """"""
+        """Test memoize"""
 
         class TestClass:
             def a_method(self):

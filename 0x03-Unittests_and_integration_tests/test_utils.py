@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 '''Module for testing utils file'''
-import unittest
 from parameterized import parameterized
+import unittest
 from utils import (access_nested_map, get_json)
 from unittest.mock import patch, Mock
 

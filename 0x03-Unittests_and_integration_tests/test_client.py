@@ -3,9 +3,11 @@
 
 
 from client import GithubOrgClient
-from parameterized import parameterized
+from fixtures import TEST_PAYLOAD
+from parameterized import parameterized, parameterized_class
+import json
 import unittest
-from unittest.mock import patch, PropertyMock
+from unittest.mock import patch, PropertyMock, Mock
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -42,8 +44,30 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "my_license"}}, "my_license", True),
         ({"license": {"key": "other_license"}}, "my_license", False)
         ])
-
     def test_has_license(self, repo, license_key, expected):
         """unit-test for GithubOrgClient.has_license"""
         result = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(result, expected)
+
+
+@parameterized_class(
+        ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+        TEST_PAYLOAD
+        )
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """Class for Integration test of fixtures"""
+
+    @classmethod
+    def setUpClass(cls):
+        config = {'return_value.json.side_effect': [
+                    cls.org_payload, cls.repos_payload,
+                    cls.org_payload, cls.repos_payload
+                    ]}
+        cls.get_patcher = patch('requests.get', **config)
+
+        cls.mock = cls.get_patcher.start()
+
+    @classmethod
+    def teardownClass(cls):
+        """class method to stop the patcher"""
+        cls.get_patcher.stop()
